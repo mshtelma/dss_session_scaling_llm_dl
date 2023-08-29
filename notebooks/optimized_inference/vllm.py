@@ -9,7 +9,7 @@
 
 # COMMAND ----------
 
-# MAGIC %run "../util/notebook-config"
+# MAGIC %run "../../databricks_llm/prompt_utils/notebook-config"
 
 # COMMAND ----------
 
