@@ -55,12 +55,14 @@
 import torch
 import os
 from vllm import LLM, SamplingParams
-os.environ['HUGGING_FACE_HUB_TOKEN'] = config['HUGGING_FACE_HUB_TOKEN']
+
+if "Llama-2" in config['model_id']:
+    os.environ['HUGGING_FACE_HUB_TOKEN'] = config['HUGGING_FACE_HUB_TOKEN']
 os.environ['HUGGINGFACE_HUB_CACHE'] ='/local_disk0/tmp/'
 
 # COMMAND ----------
 
-# MAGIC %run "./util/install_ray"
+# MAGIC %run "../../databricks_llm/prompt_utils/install_ray"
 
 # COMMAND ----------
 
@@ -70,7 +72,7 @@ torch.cuda.empty_cache()
 
 # COMMAND ----------
 
-llm = LLM(model=config['modelId'],
+llm = LLM(model=config['model_id'],
           dtype="half",
           gpu_memory_utilization = 0.95,
           trust_remote_code=True)
