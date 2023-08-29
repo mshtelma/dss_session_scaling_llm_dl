@@ -55,7 +55,7 @@
 import torch
 import os
 from vllm import LLM, SamplingParams
-os.environ['HUGGING_FACE_HUB_TOKEN'] = "<add your hf key>"
+os.environ['HUGGING_FACE_HUB_TOKEN'] = config['HUGGING_FACE_HUB_TOKEN']
 os.environ['HUGGINGFACE_HUB_CACHE'] ='/local_disk0/tmp/'
 
 # COMMAND ----------

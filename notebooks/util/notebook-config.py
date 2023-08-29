@@ -38,10 +38,10 @@ _ = spark.catalog.setCurrentDatabase(config['database_name'])
 import os
 
 if config['model_id'] == 'openai':
-  os.environ['OPENAI_API_KEY'] = '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'
+  os.environ['OPENAI_API_KEY'] = '<add open AI key>'
 
 if "Llama-2" in config['model_id']:
-  config['HUGGING_FACE_HUB_TOKEN'] = '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'
+  config['HUGGING_FACE_HUB_TOKEN'] = '<add hf keys>'
 
 # COMMAND ----------
 
