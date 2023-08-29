@@ -36,7 +36,7 @@ from langchain.base_language import BaseLanguageModel
 
 from langchain import LLMChain
 from datasets import Dataset, load_dataset
-from util.mptbot import HuggingFacePipelineLocal,TGILocalPipeline
+from databricks_llm.prompt_utils.mptbot import HuggingFacePipelineLocal,TGILocalPipeline
 
 # COMMAND ----------
 
