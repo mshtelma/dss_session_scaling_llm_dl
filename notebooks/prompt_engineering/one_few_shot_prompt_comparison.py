@@ -11,7 +11,6 @@
 
 # DBTITLE 1,Install Required Libraries
 # MAGIC %run "../../databricks_llm/prompt_utils/install-prep-libraries"
-
 # COMMAND ----------
 
 # DBTITLE 1,Optional : Load Ray Dashboard to show cluster Utilisation

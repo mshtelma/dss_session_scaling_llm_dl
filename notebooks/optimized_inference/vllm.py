@@ -61,7 +61,6 @@ if "Llama-2" in config['model_id']:
 os.environ['HUGGINGFACE_HUB_CACHE'] ='/local_disk0/tmp/'
 
 # COMMAND ----------
-
 # MAGIC %run "../../databricks_llm/prompt_utils/install_ray"
 
 # COMMAND ----------
@@ -72,7 +71,8 @@ torch.cuda.empty_cache()
 
 # COMMAND ----------
 
-llm = LLM(model=config['model_id'],
+
+llm = LLM(model=config['modelId'],
           dtype="half",
           gpu_memory_utilization = 0.95,
           trust_remote_code=True)

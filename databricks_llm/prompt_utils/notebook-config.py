@@ -16,8 +16,9 @@ config['use-case']="dss_few_shot_prompt_comparison"
 # Define the model we would like to use
 # config['model_id'] = 'openai'
 # config['model_id'] = 'meta-llama/Llama-2-70b-chat-hf'
-config['model_id'] = 'meta-llama/Llama-2-13b-chat-hf'
-# config['model_id'] = 'mosaicml/mpt-30b-chat'
+# config['model_id'] = 'meta-llama/Llama-2-13b-chat-hf'
+config['model_id'] = 'mosaicml/mpt-30b-chat'
+
 username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
 config['use_azure_formrecognizer'] = True
 
@@ -41,7 +42,7 @@ if config['model_id'] == 'openai':
   os.environ['OPENAI_API_KEY'] = '<add open AI key>'
 
 if "Llama-2" in config['model_id']:
-  config['HUGGING_FACE_HUB_TOKEN'] = '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'
+  config['HUGGING_FACE_HUB_TOKEN'] = '<add hf keys>'
 
 # COMMAND ----------
 
