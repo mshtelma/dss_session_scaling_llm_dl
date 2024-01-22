@@ -7,6 +7,7 @@ from typing import Tuple
 import torch
 
 from datasets import Dataset, load_dataset, load_from_disk, DatasetDict
+from transformers.integrations import MLflowCallback
 
 from huggingface_hub import login
 
@@ -20,6 +21,7 @@ from transformers import (
 )
 
 from databricks_llm.model_utils import get_model_and_tokenizer, get_tokenizer
+from databricks_llm.callbacks import CustomMLflowCallback
 from databricks_llm.utils import ExtendedTrainingArguments
 
 logger = logging.getLogger(__name__)
@@ -95,6 +97,7 @@ def setup_hf_trainer(
     training_args = TrainingArguments(
         local_rank=args.local_rank,
         output_dir=args.output_dir,
+        run_name=args.run_name,
         per_device_train_batch_size=args.per_device_train_batch_size,
         per_device_eval_batch_size=args.per_device_eval_batch_size,
         gradient_checkpointing=args.gradient_checkpointing,
@@ -132,6 +135,7 @@ def setup_hf_trainer(
 
     trainer = Trainer(
         model=model,
+        tokenizer=tokenizer,
         args=training_args,
         data_collator=data_collator,
         train_dataset=train_dataset,
@@ -145,9 +149,11 @@ def train(args: ExtendedTrainingArguments):
     train_dataset = load_training_dataset(
         tokenizer, args.dataset, "train", "text", 256, formatting_func=None
     )
+    # train_dataset = train_dataset.select(range(2000))
     eval_dataset = load_training_dataset(
         tokenizer, args.dataset, "test", "text", 256, formatting_func=None
     )
+    # eval_dataset = eval_dataset.select(range(2000))
     if args.deepspeed_config:
         with open(args.deepspeed_config) as json_data:
             deepspeed_config_dict = json.load(json_data)
@@ -159,7 +165,9 @@ def train(args: ExtendedTrainingArguments):
         args=args,
         deepspeed_config_dict=deepspeed_config_dict,
     )
+    trainer.add_callback(CustomMLflowCallback)
     trainer.train()
+    
     trainer.save_model(args.final_model_output_path)
     tokenizer.save_pretrained(args.final_model_output_path)
 

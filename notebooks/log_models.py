@@ -11,6 +11,7 @@
 # MAGIC %autoreload 2
 
 # COMMAND ----------
+
 from huggingface_hub import notebook_login, login
 import pandas as pd
 import transformers
@@ -55,10 +56,11 @@ get_dbutils().widgets.text("model_name", "my_llm", "model_name")
 dbfs_model_location = get_dbutils().widgets.get("dbfs_model_location")
 model_name = get_dbutils().widgets.get("model_name")
 print(dbfs_model_location)
+
 # COMMAND ----------
 
 
-# MAGIC !ls -lah {dbfs_model_location}
+!ls -lah {dbfs_model_location}
 
 # COMMAND ----------
 
@@ -93,7 +95,7 @@ class LLMPyFuncModel(mlflow.pyfunc.PythonModel):
         This method generates the prompt for the model.
         """
 
-        return f"""<s>[INST] <<SYS>>Extract entities from the text below.<</SYS>> {query} [/INST] """
+        return f"""<s>[INST] <<SYS>>Extract entities from the text below. only<</SYS>> {query} [/INST] """
 
     def predict(self, context, model_input):
         """

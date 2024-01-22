@@ -3,7 +3,7 @@ from typing import Tuple
 
 import torch
 import transformers
-from peft import LoraConfig, get_peft_model
+# from peft import LoraConfig, get_peft_model
 
 from transformers import (
     AutoModelForCausalLM,
@@ -52,27 +52,27 @@ def get_model(
         device_map="auto" if inference else None,
     )
 
-    if use_4bit:
-        from peft import prepare_model_for_kbit_training
+    # if use_4bit:
+        # from peft import prepare_model_for_kbit_training
 
-        model = prepare_model_for_kbit_training(model)
+        # model = prepare_model_for_kbit_training(model)
 
-    if use_lora:
-        lora_config = LoraConfig(
-            r=16,
-            lora_alpha=32,
-            target_modules=[
-                "query_key_value",
-                "dense",
-                "dense_h_to_4h",
-                "dense_4h_to_h",
-            ],
-            lora_dropout=0.05,
-            bias="none",
-            task_type="CAUSAL_LM",
-        )
-        model = get_peft_model(model, lora_config)
-        model.print_trainable_parameters()
+    # if use_lora:
+        # lora_config = LoraConfig(
+        #     r=16,
+        #     lora_alpha=32,
+        #     target_modules=[
+        #         "query_key_value",
+        #         "dense",
+        #         "dense_h_to_4h",
+        #         "dense_4h_to_h",
+        #     ],
+        #     lora_dropout=0.05,
+        #     bias="none",
+        #     task_type="CAUSAL_LM",
+        # )
+        # model = get_peft_model(model, lora_config)
+        # model.print_trainable_parameters()
 
     model.config.use_cache = False
 
@@ -83,9 +83,10 @@ def get_tokenizer(
     pretrained_name_or_path: str,
 ) -> PreTrainedTokenizer:
     tokenizer = AutoTokenizer.from_pretrained(
-        pretrained_name_or_path, trust_remote_code="true", padding_side="left"
-    )
+        pretrained_name_or_path, trust_remote_code="true")
+    tokenizer.pad_token_id = tokenizer.eos_token_id
     tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "right"
     return tokenizer
 
 
@@ -101,6 +102,7 @@ def get_model_and_tokenizer(
         pretrained_name_or_path_tokenizer
         if pretrained_name_or_path_tokenizer is not None
         else pretrained_name_or_path,
+        
     )
     model = get_model(
         pretrained_name_or_path,

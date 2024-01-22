@@ -1,8 +1,7 @@
-torch==2.0.1
-accelerate==0.21.0
-transformers[torch]==4.31.0
+accelerate
+transformers[torch]
 datasets>=2.10.0,<3
-deepspeed==0.10.0
+deepspeed
 peft
 einops
 bitsandbytes
@@ -11,3 +10,5 @@ click>=8.0.4,<9
 spacy
 langchain[spacy]
 chromadb==0.3.22
+psutil
+pynvml

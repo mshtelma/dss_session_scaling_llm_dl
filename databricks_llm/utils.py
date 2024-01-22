@@ -31,6 +31,7 @@ class ExtendedTrainingArguments:
     deepspeed_config: Optional[str] = field(default=None)
 
     output_dir: Optional[str] = field(default=None)
+    run_name: Optional[str] = field(default=None)
     per_device_train_batch_size: Optional[int] = field(default=1)
     per_device_eval_batch_size: Optional[int] = field(default=1)
     gradient_checkpointing: Optional[bool] = field(default=True)
