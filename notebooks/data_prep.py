@@ -1,5 +1,8 @@
 # Databricks notebook source
-# MAGIC %md # e2e_nlg
+# MAGIC %md 
+# MAGIC # This is the Data Prep to download the dataset and provide it in the correct prompt structure
+# MAGIC
+# MAGIC ## Dataset used : e2e_nlg
 
 # COMMAND ----------
 

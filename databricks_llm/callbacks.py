@@ -113,7 +113,7 @@ class CustomMLflowCallback(MLflowCallback):
 
 class LLMPyFuncModel(mlflow.pyfunc.PythonModel):
     def __init__(
-        self,context
+        self
     ):
         pass
 
